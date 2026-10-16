@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ecoservices</title>
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+
+  <body>
+    <main class="mx-auto max-w-[960px] px-8 pt-6 pb-12">
+      <header class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Services</h1>
+        <button type="button" class="btn rounded-full" data-variant="outline" id="add-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+          Add Service
+        </button>
+      </header>
+      <p id="msg" role="status" class="text-muted-foreground mt-1 min-h-6 text-sm break-words"></p>
+
+      <h2 class="mt-4 mb-2 text-lg font-semibold">Quick Start</h2>
+      <div class="cards" id="cards"></div>
+
+      <h2 class="mt-4 mb-2 text-lg font-semibold" id="services-title" hidden>Running Services</h2>
+      <ul id="services" class="grid gap-2"></ul>
+    </main>
+
+    <dialog class="drawer" data-side="right" id="drawer" aria-labelledby="drawer-title">
+      <div>
+        <header class="flex-row! items-center justify-between">
+          <h2 id="drawer-title">Add Custom Service</h2>
+          <button type="button" class="btn close" data-variant="ghost" data-size="icon-sm" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </header>
+        <section class="px-4">
+          <form id="start-form" class="form grid gap-5">
+            <div role="group" class="field">
+              <label for="type">Service Type</label>
+              <div class="combobox w-full" id="type-box">
+                <input type="text" role="combobox" id="type" class="w-full" autocomplete="off" autocorrect="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="type-listbox" />
+                <svg class="combobox-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                <div data-popover aria-hidden="true" class="w-full">
+                  <div role="listbox" id="type-listbox" aria-orientation="vertical">
+                    <div role="option" data-value="postgres">postgres</div>
+                    <div role="option" data-value="redis">redis</div>
+                    <div role="option" data-value="mongodb">mongodb</div>
+                    <div role="option" data-value="rabbitmq">rabbitmq</div>
+                  </div>
+                </div>
+                <input type="hidden" value="postgres" />
+              </div>
+            </div>
+
+            <div role="group" class="field" id="port-field">
+              <label for="port">Port</label>
+              <input id="port" type="number" min="1" max="65535" required aria-describedby="port-msg" />
+              <p id="port-msg" role="status"></p>
+            </div>
+
+            <div role="group" class="field">
+              <label for="name">Custom Name (optional)</label>
+              <input id="name" type="text" maxlength="64" />
+            </div>
+
+            <div role="group" class="field">
+              <label for="image">Docker Image</label>
+              <input id="image" type="text" required pattern="[A-Za-z0-9._/:@\-]+" />
+            </div>
+
+            <div role="group" class="field" data-orientation="horizontal">
+              <input type="checkbox" role="switch" id="persist" checked />
+              <label for="persist">Persist data (volume)</label>
+            </div>
+            <p class="text-muted-foreground -mt-3 text-xs">Off: ephemeral, destroyed on stop.</p>
+          </form>
+        </section>
+        <footer>
+          <button type="submit" form="start-form" class="btn" id="start">Start Service</button>
+        </footer>
+      </div>
+    </dialog>
+
+    <dialog class="drawer logs-drawer" data-side="right" id="logs" aria-labelledby="logs-title">
+      <div>
+        <header class="flex-row! items-center justify-between">
+          <h2 id="logs-title">Logs</h2>
+          <button type="button" class="btn close" data-variant="ghost" data-size="icon-sm" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </header>
+        <section class="flex px-4 pb-4">
+          <pre id="logs-body" tabindex="0"></pre>
+        </section>
+      </div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@import "basecoat-css";
+
+/* Pro theme: Basecoat dark tokens with an indigo accent. */
+.dark {
+  --background: #0f1420;
+  --card: rgb(255 255 255 / 5%);
+  --popover: rgb(20 26 40 / 92%);
+  --primary: #4f5dff;
+  --primary-foreground: #fff;
+  --ring: #4f5dff;
+  --success: #3ee06a;
+  --warning: #f5c542;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Inter, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgb(79 93 255 / 12%), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgb(62 224 106 / 6%), transparent 60%),
+    var(--background);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glass surfaces */
+.card,
+#services li,
+.drawer > * {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+#add-btn {
+  border-color: rgb(79 93 255 / 60%);
+  background: rgb(79 93 255 / 18%);
+  color: #aab3ff;
+  box-shadow: 0 0 20px rgb(79 93 255 / 25%);
+}
+
+.btn[data-variant="primary"],
+.btn:not([data-variant]) {
+  box-shadow: 0 4px 18px rgb(79 93 255 / 35%);
+}
+
+/* Quick start: horizontal carousel, 3 cards visible. */
+.cards {
+  --gap: 1rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--gap)) / 3);
+  gap: var(--gap);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  overscroll-behavior-x: contain;
+  padding: 4px 4px 12px; /* room so hover glow isn't clipped */
+  margin: -4px -4px 0;
+}
+
+@media (max-width: 720px) {
+  .cards {
+    grid-auto-columns: 80%;
+  }
+}
+
+.cards > .card {
+  scroll-snap-align: start;
+  min-width: 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cards > .card:hover {
+  border-color: rgb(79 93 255 / 45%);
+  box-shadow: 0 8px 30px rgb(79 93 255 / 18%);
+}
+
+.badge.warn {
+  color: var(--warning);
+  border-color: rgb(245 197 66 / 50%);
+  background: rgb(245 197 66 / 10%);
+}
+
+/* Running services */
+#services li {
+  display: grid;
+  grid-template-columns: 12px 28px minmax(5em, 9em) 4.5em minmax(8em, 1fr) auto auto;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.6em 0.9em;
+  border-radius: calc(var(--radius) + 4px);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6b7280;
+}
+
+.running .dot {
+  background: var(--success);
+  box-shadow: 0 0 10px var(--success);
+}
+
+.btn.go {
+  color: var(--success);
+  border-color: rgb(62 224 106 / 35%);
+}
+
+/* Port check: Basecoat styles aria-invalid="true"; add the success state. */
+input[aria-invalid="false"] {
+  border-color: rgb(62 224 106 / 70%);
+  box-shadow: 0 0 0 3px rgb(62 224 106 / 12%);
+}
+
+#port-msg:empty {
+  display: none;
+}
+
+select option {
+  background: #141a28;
+}
+
+/* Logs drawer */
+.logs-drawer > * {
+  width: min(640px, 92vw);
+  max-width: none;
+}
+
+#logs-body {
+  flex: 1;
+  margin: 0;
+  padding: 0.8em;
+  overflow: auto;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  background: rgb(0 0 0 / 45%);
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  outline: none;
+}
